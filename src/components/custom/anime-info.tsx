@@ -388,12 +388,12 @@ export function AnimeInfoBannerV2({
               </DialogTrigger>
               <DialogContent
                 showCloseButton={false}
-                className="max-w-[90vw] max-h-[90vh] p-0 border-0 border-none bg-transparent shadow-none w-auto md:w-full"
+                className="p-0 border-0 border-none bg-transparent shadow-none size-auto"
               >
                 <DialogClose asChild>
                   <Button
                     variant="ghost"
-                    className="flex rounded-xl h-auto ps-0 pe-0 px-0"
+                    className="flex rounded-xl h-auto ps-0 pe-0 px-0 max-w-[90vw] max-h-[90vh]"
                   >
                     <Image
                       src={
@@ -404,7 +404,7 @@ export function AnimeInfoBannerV2({
                       placeholder="blur"
                       blurDataURL={getShimmerDataURL(data.color || "#8bdfea")}
                       alt={data.title?.eng || "cover"}
-                      className="size-auto md:size-full object-contain rounded-xl"
+                      className="size-full rounded-xl object-contain"
                       width={800}
                       height={1000}
                       fetchPriority="high"
@@ -545,7 +545,7 @@ export function AnimeInfoBannerV2({
                 <ButtonGroup className="inline-flex items-center overflow-hidden">
                   {data.episodes && data.episodes >= 1 ? (
                     <Button
-                      className="size-auto px-3 py-1.5 font-medium"
+                      className="size-auto md:h-10 px-3 py-1.5 font-medium"
                       asChild
                     >
                       <Link
@@ -557,23 +557,23 @@ export function AnimeInfoBannerV2({
                     </Button>
                   ) : (
                     <Button
-                      className="size-auto px-3 py-1.5 font-medium"
+                      className="size-auto md:h-10 px-3 py-1.5 font-medium"
                       disabled
                     >
                       <PlayIcon fill="currentColor" className="size-5" />
                       Watch Now
                     </Button>
                   )}
-                  <Button className="size-auto px-3 py-1.5">
+                  <Button className="size-auto md:h-10 px-3 py-1.5">
                     <PencilLineIcon className="size-5" />
                   </Button>
                 </ButtonGroup>
-                <Button className="size-auto px-3 py-1.5">
+                <Button className="size-auto md:h-10 px-3 py-1.5">
                   <BookmarkIcon className="size-5" />
                 </Button>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="size-auto px-3 py-1.5">
+                    <Button className="size-auto md:h-10 px-3 py-1.5">
                       <Share2Icon className="size-5" />
                     </Button>
                   </DialogTrigger>
@@ -635,7 +635,7 @@ export function AnimeInfoTabs({
       orientation="horizontal"
       {...props}
     >
-      <TabsList className="group-data-horizontal/tabs:h-10 h-10 bg-white/3 border ring-ring w-fit p-1 gap-0.5 sm:p-1.5">
+      <TabsList className="group-data-horizontal/tabs:h-10 h-10 bg-white/3 border ring-ring w-fit p-1 gap-0.5">
         <TabsTrigger
           value="overview"
           className="text-primary-foreground/60 hover:text-primary-foreground dark:hover:text-primary-foreground data-active:bg-primary data-active:text-primary-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground data-active:border-transparent dark:data-active:border-transparenti px-3.5 py-1.5 sm:px-6 sm:py-2 text-xs sm:text-sm font-semibold transition-colors duration-300 ease-in-out"
@@ -1296,9 +1296,9 @@ export function AnimeInfoBannerSkeleton({
 
               {/* Actions */}
               <div className="sm:justify-start gap-3 flex w-max items-center">
-                <Skeleton className="h-8 w-40 rounded-md" />
-                <Skeleton className="size-8 rounded-md" />
-                <Skeleton className="size-8 rounded-md" />
+                <Skeleton className="h-8 md:h-10 w-40 rounded-md" />
+                <Skeleton className="size-8 md:size-10 rounded-md" />
+                <Skeleton className="size-8 md:size-10 rounded-md" />
               </div>
             </div>
           </div>

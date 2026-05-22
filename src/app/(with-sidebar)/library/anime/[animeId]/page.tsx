@@ -73,7 +73,7 @@ export default async function InfoPage({
   // throw new Error("Error test");
 
   return (
-    <div className="min-w-0 max-h-dvh overflow-x-hidden overflow-y-scroll flex flex-1 shrink flex-col pt-0 gap-5 sm:gap-7 md:gap-11">
+    <div className="min-w-0 max-h-dvh overflow-x-hidden overflow-y-scroll flex flex-1 shrink flex-col pt-0 gap-5 sm:gap-7">
       {/* <div className="w-screen max-w-full min-h-dvh overflow-x-hidden overflow-y-scroll pt-0"> */}
       <AnimeInfoBannerV2 data={animeInfo} />
       {/* <div className="flex flex-1 flex-col gap-5 sm:gap-7 md:gap-11"> */}
