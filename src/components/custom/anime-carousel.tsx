@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { MoveRightIcon, PlayIcon, TvIcon } from "lucide-react";
+import { ChevronRightIcon, PlayIcon, TvIcon } from "lucide-react";
 import { cn } from "@/lib/shadcn/utils";
 
 interface AnimeProps {
@@ -63,7 +63,7 @@ export function AnimeCards({
             className="ml-auto flex items-center gap-1.5 text-[10px] font-medium tracking-widest text-muted-foreground/60 uppercase"
           >
             View all
-            <MoveRightIcon />
+            <ChevronRightIcon />
           </Link>
         )}
       </Label>
@@ -80,7 +80,7 @@ export function AnimeCards({
                 className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 pl-4 min-w-0 shrink-0 grow-0"
               >
                 <Link href={href} className="group relative block w-full">
-                  <Card className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-foreground/5 ring-1 ring-foreground/6 transition-all duration-300 group-hover:ring-foreground/20 group-hover:shadow-xl group-hover:shadow-black/30">
+                  <Card className="relative aspect-2/3 w-full overflow-hidden rounded-xl bg-foreground/5 ring-1 ring-foreground/6 transition-all duration-300 group-hover:ring-foreground/20 group-hover:shadow-xl group-hover:shadow-black/30">
                     <Image
                       src={anime.image}
                       alt={anime.title}
@@ -195,7 +195,7 @@ export function AnimeCardsSkeleton({
               className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 pl-4 min-w-0 shrink-0 grow-0"
             >
               <div className="relative w-full">
-                <Skeleton className="aspect-[2/3] w-full rounded-xl" />
+                <Skeleton className="aspect-2/3 w-full rounded-xl" />
 
                 {/* Info Below */}
                 <div className="mt-2 space-y-2">
@@ -247,7 +247,7 @@ export function AnimeCardsEmpty({
         </h2>
       </Label>
       <div className={cn("px-6 lg:px-12", paddingX)}>
-        <div className="flex items-center justify-center min-h-[200px] md:min-h-[280px] rounded-xl bg-muted/20 border border-dashed border-muted-foreground/25">
+        <div className="flex items-center justify-center min-h-50 md:min-h-70 rounded-xl bg-muted/20 border border-dashed border-muted-foreground/25">
           <div className="text-center">
             <p className="text-sm text-muted-foreground">{message}</p>
           </div>

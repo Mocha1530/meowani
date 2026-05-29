@@ -46,8 +46,15 @@ export const mapRelationType = (
   relationType: MediaRelation,
 ): MediaRelation | undefined => {
   if (!relationType) return;
-  return (relationType[0].toUpperCase() +
-    relationType.slice(1).toLowerCase()) as MediaRelation;
+  switch (relationType) {
+    case "SPIN_OFF":
+      return "Spin Off" as MediaRelation;
+    case "SIDE_STORY":
+      return "Side Story" as MediaRelation;
+    default:
+      return (relationType[0].toUpperCase() +
+        relationType.slice(1).toLowerCase()) as MediaRelation;
+  }
 };
 
 export const capitalize = (text: string): string => {

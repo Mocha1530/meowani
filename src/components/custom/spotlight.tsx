@@ -60,7 +60,7 @@ export function Spotlight({ items }: SpotlightProps) {
       }}
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
-      className="pb-4 md:pb-8 aspect-video"
+      className="pb-4 md:pb-8 aspect-square sm:aspect-video"
     >
       <CarouselContent className="-ml-1 border-none">
         {items.map((item: ISimpleAnimeData) => (
@@ -70,7 +70,7 @@ export function Spotlight({ items }: SpotlightProps) {
           >
             <div className="w-full max-w-full">
               <Card className="rounded-none overflow-hidden p-0">
-                <div className="relative aspect-video">
+                <div className="relative aspect-square sm:aspect-video">
                   <Image
                     src={
                       item.banner ||
@@ -81,10 +81,9 @@ export function Spotlight({ items }: SpotlightProps) {
                     placeholder="blur"
                     blurDataURL={getShimmerDataURL(item.color || "#8bdfea")}
                     fill
-                    className="object-cover"
+                    className="object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-background from-20% via-background/80 via-60% bg-transparent" />
-                  <div className="absolute inset-0 bg-radial from-transparent via-transparent to-black/50" />
+                  <div className="absolute inset-0 bg-linear-to-t from-background from-20% via-background/80 via-60% to-transparent" />
                 </div>
                 <div className="absolute inset-0 flex flex-col gap-4 justify-end max-h-auto pb-4 md:pb-10">
                   <CardHeader
@@ -157,7 +156,8 @@ export function SpotlightSkeleton() {
         <CarouselItem className="rounded-none border-none pl-0 w-full relative">
           <div className="w-full max-w-full">
             <Card className="rounded-none overflow-hidden p-0">
-              <div className="relative w-full aspect-video" />
+              <div className="relative w-full aspect-square sm:aspect-video" />
+              <div className="absolute inset-0 bg-linear-to-t from-background from-20% via-background/80 via-60% to-transparent" />
               <div className="absolute inset-0 flex flex-col gap-4 justify-end max-h-auto pb-4 md:pb-10">
                 <CardHeader className="px-4 md:px-10">
                   <CardAction className="ml-4">

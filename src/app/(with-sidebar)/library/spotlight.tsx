@@ -1,7 +1,9 @@
 import type { ISpotlight } from "@/types/library";
 
 import SpotlightClient from "@/components/custom/spotlight.wrapper";
-import { SOURCE_API } from "@/constants/api";
+import { SourceApi } from "@/lib/api";
+
+const api = new SourceApi();
 
 /**
  * Fetches HiAnime spotlight entries, replaces each item's final ID segment with the corresponding AniList ID, and renders the SpotlightClient with the updated items.
@@ -12,7 +14,7 @@ import { SOURCE_API } from "@/constants/api";
  */
 export async function SpotlightComponent() {
   try {
-    const raw = await fetch(SOURCE_API.HIANIME.SPOTLIGHT, {
+    const raw = await fetch(api.HiAnime.spotlight(), {
       next: { revalidate: 86400 },
     });
     const { results } = await raw.json();
@@ -45,7 +47,7 @@ export async function SpotlightComponent() {
  * @returns An object containing `malID` (MyAnimeList ID) and `alID` (AniList ID)
  */
 async function getItem(id: string) {
-  const req = await fetch(`${SOURCE_API.HIANIME.INFO}id=${id}`, {
+  const req = await fetch(api.HiAnime.getInfo(id), {
     next: { revalidate: 86400 },
   });
   const { malID, alID } = await req.json();

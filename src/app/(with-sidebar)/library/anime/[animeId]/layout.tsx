@@ -4,6 +4,8 @@ import {
   AnimeInfoTabsSkeleton,
 } from "@/components/custom/anime-info";
 import { AnimeCardsSkeleton } from "@/components/custom/anime-carousel";
+import { EndOfContent } from "@/components/custom/end-of-content";
+import { Footer } from "@/components/custom/footer";
 
 /**
  * Layout component that wraps `children` in a React Suspense boundary and shows catalog skeletons while descendants are pending.
@@ -19,10 +21,12 @@ export default function BrowseLayout({
   return (
     <Suspense
       fallback={
-        <div className="min-w-0 max-h-dvh overflow-x-hidden overflow-y-scroll flex flex-1 flex-col pt-0 gap-5 overflow-auto">
+        <div className="min-w-0 max-h-dvh overflow-x-hidden overflow-y-scroll flex flex-1 shrink flex-col pt-0 gap-5 sm:gap-7 md:gap-11">
           <AnimeInfoBannerSkeleton />
           <AnimeInfoTabsSkeleton />
           <AnimeCardsSkeleton paddingX="px-1.5 md:px-6 lg:px-12 xl:px-14" />
+          <EndOfContent />
+          <Footer className="mt-auto" />
         </div>
       }
     >

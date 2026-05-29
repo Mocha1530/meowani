@@ -5,12 +5,12 @@ const socialSharing: SocialSharingConfig = {
   platforms: {
     x: true,
     linkedin: false,
-    facebook: false,
-    pinterest: false,
+    facebook: true,
+    pinterest: true,
     whatsapp: false,
-    reddit: false,
-    telegram: false,
-    email: true,
+    reddit: true,
+    telegram: true,
+    email: false,
     copyLink: true,
   },
 };

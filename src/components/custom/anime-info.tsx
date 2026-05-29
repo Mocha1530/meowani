@@ -33,6 +33,8 @@ import {
   LayersIcon,
   ChevronDown,
   Building2Icon,
+  ExternalLinkIcon,
+  XIcon,
 } from "lucide-react";
 import {
   Collapsible,
@@ -55,10 +57,12 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SocialSharing } from "./social-sharing";
 
 interface IAnimeInfoBannerProps {
   data: {
@@ -267,7 +271,7 @@ export function AnimeInfoBanner({
                     {data.episodes && data.episodes >= 1 ? (
                       <Button className="md:h-10 md:px-3" asChild>
                         <Link
-                          href={`/library/watch/${TitleSlug.fromTitle(data.title?.eng || data.title?.romaji || "No Title", data.id)}/1`}
+                          href={`/library/watch/${TitleSlug.fromTitle(data.title?.eng || data.title?.romaji || "No Title", data.id)}/episode-1`}
                         >
                           <PlayIcon fill="currentColor" />
                           Watch Now
@@ -286,10 +290,320 @@ export function AnimeInfoBanner({
                   <Button className="md:size-10">
                     <BookmarkIcon />
                   </Button>
-                  <Button className="md:size-10">
-                    <Share2Icon />
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="md:size-10">
+                        <Share2Icon />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent
+                      showCloseButton={false}
+                      className="p-0 gap-0"
+                    >
+                      <DialogClose asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon-lg"
+                          className="absolute top-2 right-2 rounded-md p-1 text-zinc-500 hover:text-foreground transition-colors size-auto z-1"
+                        >
+                          <XIcon className="size-5 text-foreground" />
+                        </Button>
+                      </DialogClose>
+                      <DialogHeader className="border-b px-5 pt-5 pb-4">
+                        <DialogTitle className="flex items-center gap-2.5 text-base font-bold tracking-tight text-foreground">
+                          <div className="flex size-8 items-center justify-center rounded-lg bg-white/8 ring-1 ring-white/10">
+                            <ExternalLinkIcon className="size-4 text-white/70" />
+                          </div>
+                          {" Share Links"}
+                        </DialogTitle>
+                        <DialogDescription className="sr-only">
+                          Share this anime to other social media platforms
+                        </DialogDescription>
+                      </DialogHeader>
+                      <SocialSharing
+                        title={`Watch ${data.title?.eng ?? data.title?.romaji} on MeowAni`}
+                        url={`https://meowani.site/library/anime/${TitleSlug.fromTitle(data.title?.eng || data.title?.romaji || "No Title", data.id)}`}
+                      />
+                    </DialogContent>
+                  </Dialog>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function AnimeInfoBannerV2({
+  data,
+  className,
+  ...props
+}: IAnimeInfoBannerProps & React.ComponentProps<"div">) {
+  return (
+    <section>
+      <div className={cn("h-[550px] sm:h-[500px]", className)} {...props}>
+        <div className="relative bottom-0 h-[350px]">
+          <Image
+            src={
+              data.bannerImage ||
+              data.image?.large ||
+              getShimmerDataURL(data.color || "#FFFFFF")
+            }
+            alt={data.title?.eng || "banner"}
+            placeholder="blur"
+            blurDataURL={getShimmerDataURL(data.color || "#8bdfea")}
+            fill
+            className="object-cover object-center size-full absolute inset-0"
+            fetchPriority="high"
+          />
+          <div className="absolute bottom-[-2px] left-0 h-[101%] w-full bg-linear-to-t from-background from-20% via-background/80 via-60% to-transparent" />
+          <div
+            className={cn(
+              "absolute bottom-[-58%] left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 sm:bottom-[-35%] sm:left-[2%] sm:translate-x-0 sm:flex-row sm:gap-6",
+              "sm:left-1.5 md:left-6 lg:left-12 xl:left-14",
+            )}
+          >
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  className="group no-scale pt-0 relative h-[245px] w-[170px] shrink-0 overflow-hidden rounded-xl sm:h-[270px] sm:w-[180px] md:h-[300px] md:w-[200px]"
+                  aria-label="View full size image"
+                >
+                  <Image
+                    src={
+                      data.image?.large ||
+                      getShimmerDataURL(data.color || "#8bdfea")
+                    }
+                    alt={data.title?.eng || "cover"}
+                    placeholder="blur"
+                    blurDataURL={getShimmerDataURL(data.color || "#8bdfea")}
+                    fill
+                    sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 20vw"
+                    className="size-full object-cover"
+                    fetchPriority="high"
+                  />
+                </Button>
+              </DialogTrigger>
+              <DialogContent
+                showCloseButton={false}
+                className="p-0 border-0 border-none bg-transparent shadow-none size-auto"
+              >
+                <DialogClose asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex rounded-xl h-auto ps-0 pe-0 px-0 max-w-[90vw] max-h-[90vh]"
+                  >
+                    <Image
+                      src={
+                        data.image?.extraLarge ||
+                        data.image?.large ||
+                        getShimmerDataURL(data.color || "#8bdfea")
+                      }
+                      placeholder="blur"
+                      blurDataURL={getShimmerDataURL(data.color || "#8bdfea")}
+                      alt={data.title?.eng || "cover"}
+                      className="size-full rounded-xl object-contain"
+                      width={800}
+                      height={1000}
+                      fetchPriority="high"
+                    />
+                  </Button>
+                </DialogClose>
+                <VisuallyHidden>
+                  <DialogTitle>Anime cover image</DialogTitle>
+                  <DialogDescription>
+                    The cover image of the current anime
+                  </DialogDescription>
+                </VisuallyHidden>
+              </DialogContent>
+            </Dialog>
+
+            {/* Anime Info */}
+            <div className="flex max-w-[95%] flex-col px-4 sm:max-w-[400px] sm:self-center sm:px-0 md:max-w-[500px] xl:max-w-[700px]">
+              {/* Stats */}
+              <div className="hidden sm:flex w-max items-center justify-start flex-wrap gap-1.5 md:gap-3">
+                {/* Episode */}
+                {data.episodes &&
+                  data.episodes >= 1 &&
+                  data.status === "FINISHED" && (
+                    <Badge className="h-5 font-bold md:h-6 md:px-3.5 md:text-base">
+                      {data.episodes} EPS
+                    </Badge>
+                  )}
+
+                {/* Type */}
+                {data.type && (
+                  <Badge
+                    className="h-5 font-bold md:h-6 md:px-3.5 md:text-base"
+                    asChild
+                  >
+                    <Link href={`/browse?format=${data.type}`}>
+                      {data.type}
+                    </Link>
+                  </Badge>
+                )}
+
+                {/* Status */}
+                {data.status && (
+                  <Badge
+                    className="h-5 font-bold md:h-6 md:px-3.5 md:text-base"
+                    asChild
+                  >
+                    <Link href={`/browse?status=${data.status}`}>
+                      {data.status}
+                    </Link>
+                  </Badge>
+                )}
+
+                {/* Season */}
+                {data.season && (
+                  <Badge
+                    className="hidden h-5 font-bold md:h-6 md:px-3.5 md:text-base lg:inline-flex capitalize"
+                    asChild
+                  >
+                    <Link href={`/browse?season=${data.season}`}>
+                      {data.season}
+                    </Link>
+                  </Badge>
+                )}
+
+                {/* Score */}
+                {data.score && (
+                  <Badge
+                    className="hidden font-bold h-5 md:h-6 md:px-3.5 md:text-base lg:inline-flex"
+                    asChild
+                  >
+                    <Link href="/browse?sort=SCORE_DESC">{data.score}%</Link>
+                  </Badge>
+                )}
+              </div>
+
+              <h1 className="line-clamp-2 text-xl w-full font-bold tracking-tighter select-text text-[1.3rem] leading-7 text-center sm:text-left sm:text-[1.4rem] sm:leading-8 md:text-[1.5rem] lg:text-[1.7rem] lg:leading-10 xl:text-[1.9rem]">
+                {data.title?.eng || data.title?.romaji || "No Title"}
+              </h1>
+              <h2 className="mt-0.5 line-clamp-2 hidden text-center text-[0.95rem] font-medium text-muted-foreground select-text sm:block sm:text-left">
+                {data.title?.romaji}
+              </h2>
+
+              {/* Genres */}
+              {data.genres && (
+                <div className="hidden mt-2.5 mb-2.5 sm:flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+                  {data.genres.map((genre) => (
+                    <Badge
+                      key={genre}
+                      variant="secondary"
+                      className="size-auto px-2.5 py-1 text-[0.8rem] font-semibold tracking-wide text-nowrap"
+                      asChild
+                    >
+                      <Link href={`/browse?genres=${genre}`}>{genre}</Link>
+                    </Badge>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-2 mb-2.5 flex sm:hidden flex-wrap items-center justify-center gap-2">
+                {data.score ? (
+                  <Badge
+                    variant="outline"
+                    className="size-auto px-2.5 py-1 text-[0.8rem] font-semibold border-cyan-500/20 bg-cyan-500/10 text-cyan-500"
+                  >
+                    <StarIcon fill="currentColor" />
+                    {data.score / 10}
+                  </Badge>
+                ) : (
+                  <Badge
+                    variant="outline"
+                    className="size-auto px-2.5 py-1 text-[0.8rem] font-semibold border-muted-foreground/20 bg-muted-foreground/10 text-muted-foreground"
+                  >
+                    <StarIcon fill="currentColor" />
+                    {"N/A"}
+                  </Badge>
+                )}
+                {data.status && (
+                  <Badge
+                    variant="secondary"
+                    className="size-auto px-2.5 py-1 text-[0.8rem] font-semibold uppercase tracking-wide text-nowrap bg-emerald-500/20 text-emerald-300"
+                  >
+                    {data.status}
+                  </Badge>
+                )}
+                {data.episodes &&
+                  data.episodes > 1 &&
+                  data.status === "FINISHED" && (
+                    <Badge
+                      variant="ghost"
+                      className="size-auto px-2.5 py-1 text-[0.8rem] font-medium text-normal text-muted-foreground/60"
+                    >
+                      {data.episodes} Episodes
+                    </Badge>
+                  )}
+              </div>
+
+              <div className="sm:justify-start gap-3 flex w-max items-center *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2">
+                <ButtonGroup className="inline-flex items-center overflow-hidden">
+                  {data.episodes && data.episodes >= 1 ? (
+                    <Button
+                      className="size-auto md:h-10 px-3 py-1.5 font-medium"
+                      asChild
+                    >
+                      <Link
+                        href={`/library/watch/${TitleSlug.fromTitle(data.title?.eng || data.title?.romaji || "No Title", data.id)}/1`}
+                      >
+                        <PlayIcon fill="currentColor" className="size-5" />
+                        Watch Now
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      className="size-auto md:h-10 px-3 py-1.5 font-medium"
+                      disabled
+                    >
+                      <PlayIcon fill="currentColor" className="size-5" />
+                      Watch Now
+                    </Button>
+                  )}
+                  <Button className="size-auto md:h-10 px-3 py-1.5">
+                    <PencilLineIcon className="size-5" />
+                  </Button>
+                </ButtonGroup>
+                <Button className="size-auto md:h-10 px-3 py-1.5">
+                  <BookmarkIcon className="size-5" />
+                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="size-auto md:h-10 px-3 py-1.5">
+                      <Share2Icon className="size-5" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent showCloseButton={false} className="p-0 gap-0">
+                    <DialogClose asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon-lg"
+                        className="absolute top-2 right-2 rounded-md p-1 text-zinc-500 hover:text-foreground transition-colors size-auto z-1"
+                      >
+                        <XIcon className="size-5 text-foreground" />
+                      </Button>
+                    </DialogClose>
+                    <DialogHeader className="border-b px-5 pt-5 pb-4">
+                      <DialogTitle className="flex items-center gap-2.5 text-base font-bold tracking-tight text-foreground">
+                        <div className="flex size-8 items-center justify-center rounded-lg bg-white/8 ring-1 ring-white/10">
+                          <ExternalLinkIcon className="size-4 text-white/70" />
+                        </div>
+                        {" Share Links"}
+                      </DialogTitle>
+                      <DialogDescription className="sr-only">
+                        Share this anime to other social media platforms
+                      </DialogDescription>
+                    </DialogHeader>
+                    <SocialSharing
+                      title={`Watch ${data.title?.eng ?? data.title?.romaji} on MeowAni`}
+                      url={`https://meowani.site/library/anime/${TitleSlug.fromTitle(data.title?.eng || data.title?.romaji || "No Title", data.id)}`}
+                    />
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </div>
@@ -321,7 +635,7 @@ export function AnimeInfoTabs({
       orientation="horizontal"
       {...props}
     >
-      <TabsList className="group-data-horizontal/tabs:h-10 h-10 bg-white/3 border ring-ring w-fit p-1 gap-0.5 sm:p-1.5">
+      <TabsList className="group-data-horizontal/tabs:h-10 h-10 bg-white/3 border ring-ring w-fit p-1 gap-0.5">
         <TabsTrigger
           value="overview"
           className="text-primary-foreground/60 hover:text-primary-foreground dark:hover:text-primary-foreground data-active:bg-primary data-active:text-primary-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground data-active:border-transparent dark:data-active:border-transparenti px-3.5 py-1.5 sm:px-6 sm:py-2 text-xs sm:text-sm font-semibold transition-colors duration-300 ease-in-out"
@@ -467,12 +781,12 @@ function Overview({
             )}
           </ItemActions>
         </Item>
-        <Collapsible className="group/synopsis">
+        <Collapsible className="group/synopsis h-full">
           <Item
             variant="outline"
             className="flex min-h-0 flex-col gap-0 bg-white/3 p-3 lg:h-full lg:flex-1 lg:p-4 lg:md:p-5"
           >
-            <h3 className="mb-2 w-full flex items-center gap-2 text-[10px] font-medium tracking-widest text-muted-foreground uppercase lg:mb-3">
+            <h3 className="mb-2 w-full flex items-center gap-2 text-[10px] font-medium tracking-widest text-muted-foreground/50 uppercase lg:mb-3">
               <InfoIcon size={12} />
               Synopsis
             </h3>
@@ -546,7 +860,7 @@ function Overview({
             <ItemContent className="group-data-[state=closed]:hidden lg:group-data-[state=open]:block lg:group-data-[state=closed]:block space-y-4">
               {/* Studios */}
               <div>
-                <div className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium tracking-widest text-foreground/35 uppercase">
+                <div className="mb-1.5 flex items-center gap-1.5 text-[10px] font-medium tracking-widest text-muted-foreground/50 uppercase">
                   <Building2Icon size={11} />
                   Studios
                 </div>
@@ -576,7 +890,7 @@ function Overview({
 
               {/* Synonyms */}
               <div>
-                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-foreground/35 uppercase">
+                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-muted-foreground/50 uppercase">
                   Synonyms
                 </p>
                 {items.synonyms && items.synonyms.length >= 1 ? (
@@ -585,7 +899,7 @@ function Overview({
                       <Badge
                         key={synonym}
                         variant="outline"
-                        className="bg-white/5 px-2.5 py-0 text-[11px] text-foreground/65 transition font-normal"
+                        className="bg-white/5 px-2.5 py-0.5 h-auto text-[11px] text-foreground/65 transition font-normal whitespace-normal"
                       >
                         {synonym}
                       </Badge>
@@ -605,7 +919,7 @@ function Overview({
 
               {/* Genres */}
               <div>
-                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-foreground/35 uppercase">
+                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-muted-foreground/50 uppercase">
                   Genres
                 </p>
                 {items.genres && items.genres.length >= 1 ? (
@@ -635,7 +949,7 @@ function Overview({
 
               {/* External site */}
               <div>
-                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-foreground/35 uppercase">
+                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-muted-foreground/50 uppercase">
                   Track on
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -674,7 +988,7 @@ function Overview({
 
               {/* Tags */}
               <div>
-                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-foreground/35 uppercase">
+                <p className="mb-1.5 text-[10px] font-medium tracking-widest text-muted-foreground/50 uppercase">
                   Tags
                 </p>
                 {items.tags && items.tags.length >= 1 ? (
@@ -706,7 +1020,7 @@ function Overview({
                   <Button
                     variant="ghost"
                     onClick={() => setTagExpanded(!tagExpanded)}
-                    className="mt-2 text-[10px] font-medium tracking-widest text-foreground/40 uppercase transition p-0 size-fit"
+                    className="mt-2 text-[10px] font-medium tracking-widest text-muted-foreground/55 uppercase transition p-0 size-fit"
                   >
                     {tagExpanded
                       ? "Show less"
@@ -872,6 +1186,9 @@ export function Characters({
 }: Omit<React.ComponentPropsWithoutRef<"div">, "children"> & ICharactersProps) {
   return (
     <div className={cn("space-y-6", className)} {...props}>
+      <h2 className="text-2xl font-bold text-foreground tracking-tight">
+        {"Main Cast & Supporting"}
+      </h2>
       {items.length >= 1 ? (
         <Carousel opts={{ align: "center", dragFree: true }} className="w-full">
           <CarouselContent className="min-w-0">
@@ -921,60 +1238,67 @@ export function Characters({
   );
 }
 
+export function AnimeEpisodes() {
+  return <>d</>;
+}
+
 export function AnimeInfoBannerSkeleton({
   className,
   ...props
-}: React.ComponentProps<"section">) {
+}: React.ComponentProps<"div">) {
   return (
-    <section className={cn("w-full", className)} {...props}>
-      <div className="relative min-h-[240px] md:min-h-[300px] lg:min-h-[360px] flex items-end">
-        {/* Banner Background */}
-        <Skeleton className="absolute inset-0 z-10" />
-        <div className="absolute inset-0 z-11 bg-linear-to-t from-background from-20% via-background/80 via-60% to-transparent" />
+    <section>
+      <div className={cn("h-[550px] sm:h-[500px]")} {...props}>
+        <div className="relative bottom-0 h-[350px]">
+          {/* Banner Background */}
+          <Skeleton className="absolute size-full inset-0" />
+          <div className="absolute bottom-[-2px] left-0 h-[101%] w-full bg-linear-to-t from-background from-20% via-background/80 via-60% to-transparent" />
 
-        <div className="relativ pointer-events-auto flex w-full flex-col items-center justify-center gap-6 px-4 pt-16 md:pd-24 md:px-10 xl:px-14 max-w-[1600px] z-20">
-          <div className="flex w-full flex-col md:flex-row items-center gap-3 pt-4 md:pt-8 md:gap-5">
+          <div
+            className={cn(
+              "absolute bottom-[-58%] left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 sm:bottom-[-35%] sm:left-[2%] sm:translate-x-0 sm:flex-row sm:gap-6",
+              "sm:left-1.5 md:left-6 lg:left-12 xl:left-14",
+            )}
+          >
             {/* Cover Image */}
-            <Skeleton className="h-[175px] w-[125px] shrink-0 rounded-xl md:h-[256px] md:w-[180px]" />
+            <Skeleton className="h-[245px] w-[170px] shrink-0 rounded-xl sm:h-[270px] sm:w-[180px] md:h-[300px] md:w-[200px]" />
 
             {/* Info Section */}
-            <div className="flex w-full flex-col items-start justify-end gap-2 md:gap-4">
-              <div className="flex w-full flex-col gap-1 text-start md:gap-1.5 items-center md:items-start">
-                {/* Stats */}
-                <div className="hidden md:flex w-full flex-wrap gap-1.5 pt-0.5 md:gap-3 md:pt-1">
-                  <Skeleton className="h-5 w-16 rounded-full md:h-6" />
-                  <Skeleton className="h-5 w-12 rounded-full md:h-6" />
-                  <Skeleton className="h-5 w-20 rounded-full md:h-6" />
-                  <Skeleton className="hidden lg:block h-5 w-16 rounded-full md:h-6" />
-                </div>
+            <div className="flex max-w-[95%] flex-col px-4 sm:max-w-[400px] sm:self-center sm:px-0 md:max-w-[500px] xl:max-w-[700px] gap-1 sm:gap-1.5">
+              {/* Stats */}
+              <div className="hidden sm:flex w-max items-center justify-start flex-wrap gap-1.5 md:gap-3">
+                <Skeleton className="h-5 w-16 rounded-full md:h-6" />
+                <Skeleton className="h-5 w-12 rounded-full md:h-6" />
+                <Skeleton className="h-5 w-20 rounded-full md:h-6" />
+                <Skeleton className="hidden lg:block h-5 w-16 rounded-full md:h-6" />
+              </div>
 
-                {/* Romaji Title */}
-                <Skeleton className="hidden md:block h-5 w-48 md:w-64" />
+              {/* Main Title */}
+              <Skeleton className="h-[1.3rem] sm:h-[1.4rem] md:h-[1.5rem] lg:h-[1.7rem] xl:h-[1.9rem] w-64 md:h-10 md:w-96" />
 
-                {/* Main Title */}
-                <Skeleton className="h-7 w-64 md:h-10 md:w-96" />
+              {/* Romaji Title */}
+              <Skeleton className="hidden sm:block h-[0.95rem] w-48 md:w-64" />
 
-                {/* Genres */}
-                <div className="hidden md:flex flex-wrap items-center gap-2">
-                  <Skeleton className="h-7 w-16 rounded-full" />
-                  <Skeleton className="h-7 w-20 rounded-full" />
-                  <Skeleton className="h-7 w-14 rounded-full" />
-                  <Skeleton className="h-7 w-18 rounded-full" />
-                </div>
+              {/* Genres */}
+              <div className="hidden sm:flex mt-1.5 mb-1.5 sm:mt-1 sm:mb-1 flex-wrap items-center justify-start gap-2">
+                <Skeleton className="h-7 w-16 rounded-full" />
+                <Skeleton className="h-7 w-20 rounded-full" />
+                <Skeleton className="h-7 w-14 rounded-full" />
+                <Skeleton className="h-7 w-18 rounded-full" />
+              </div>
 
-                {/* Badges */}
-                <div className="flex md:hidden flex-wrap items-center justify-center gap-2">
-                  <Skeleton className="h-7 w-14 rounded-full" />
-                  <Skeleton className="h-7 w-20 rounded-full" />
-                  <Skeleton className="h-7 w-24 rounded-full" />
-                </div>
+              {/* Badges */}
+              <div className="mt-1.5 mb-1.5 flex sm:hidden flex-wrap items-center justify-center gap-2">
+                <Skeleton className="h-7 w-14 rounded-full" />
+                <Skeleton className="h-7 w-[72px] rounded-full" />
+                <Skeleton className="h-7 w-[76px] rounded-full" />
+              </div>
 
-                {/* Actions */}
-                <div className="flex gap-2 w-fit md:w-full items-stretch">
-                  <Skeleton className="h-9 w-40 rounded-md md:h-10" />
-                  <Skeleton className="size-9 rounded-md md:size-10" />
-                  <Skeleton className="size-9 rounded-md md:size-10" />
-                </div>
+              {/* Actions */}
+              <div className="sm:justify-start gap-3 flex w-max items-center">
+                <Skeleton className="h-8 md:h-10 w-40 rounded-md" />
+                <Skeleton className="size-8 md:size-10 rounded-md" />
+                <Skeleton className="size-8 md:size-10 rounded-md" />
               </div>
             </div>
           </div>
@@ -1033,8 +1357,8 @@ export function AnimeInfoTabsSkeleton({
         </div>
 
         {/* Sidebar */}
-        <div className="flex flex-col space-y-3 lg:col-span-4">
-          <div className="p-3 lg:p-4 rounded-lg border bg-white/3 space-y-4">
+        <div className="flex flex-col space-y-3 lg:col-span-4 h-full">
+          <div className="p-3 lg:p-4 rounded-lg border bg-white/3 space-y-4 h-full">
             {/* Studios */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">

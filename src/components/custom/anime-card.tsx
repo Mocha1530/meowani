@@ -49,7 +49,7 @@ export function AnimeCard({
   const Tag = Component as any;
   return (
     <Tag {...props} className={cn("group relative block w-full", className)}>
-      <Card className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-foreground/5 ring-1 ring-foreground/6 transition-all duration-300 group-hover:ring-foreground/20 group-hover:shadow-xl group-hover:shadow-black/30">
+      <Card className="relative aspect-2/3 w-full overflow-hidden rounded-xl bg-foreground/5 ring-1 ring-foreground/6 transition-all duration-300 group-hover:ring-foreground/20 group-hover:shadow-xl group-hover:shadow-black/30">
         <Image
           src={anime.image || getShimmerDataURL(anime.color || "#8bdfea")}
           alt={anime.title || "No Title"}
@@ -159,7 +159,7 @@ export function AnimeCardSkeleton({
       )}
     >
       <div className="relative w-full">
-        <Skeleton className="aspect-[2/3] w-full rounded-xl" />
+        <Skeleton className="aspect-2/3 w-full rounded-xl" />
 
         {/* Info Below */}
         <div className="mt-2 space-y-2">

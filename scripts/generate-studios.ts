@@ -84,12 +84,55 @@ async function fetchAllStudios(): Promise<Studio[]> {
   return studios;
 }
 
-/**
- * Fetches all studios from AniList, filters for animation studios, and writes a sorted
- * list of `{ id, name }` objects to `data/animation-studios.json` in the current working directory.
- *
- * Ensures the target directory exists and logs progress and completion.
- */
+async function updateVariable(items: Array<{ id: number; name: string }>) {
+  const filePath = path.join(
+    process.cwd(),
+    "src",
+    "constants",
+    "anilist",
+    "enums.ts",
+  );
+  const variable = "studioEnums";
+
+  try {
+    const fileContent = await fs.readFile(filePath, "utf-8");
+
+    const objectRows = items.map((item) => {
+      const name = JSON.stringify(item.name);
+      return `  { id: ${item.id}, name: ${name} },`;
+    });
+
+    const formattedArray = `[\n${objectRows.join("\n")}\n] as const;`;
+    const targetDeclaration = `export const ${variable} =`;
+
+    const startIndex = fileContent.indexOf(targetDeclaration);
+    if (startIndex === -1) {
+      throw new Error(`Variable "${variable}" not found in the file.`);
+    }
+
+    const searchAfterStart = fileContent.substring(startIndex);
+    const relativeIndex = searchAfterStart.indexOf("as const;");
+
+    if (relativeIndex === -1) {
+      throw new Error(
+        "Could not find the closing 'as const;' marker to clean broken text.",
+      );
+    }
+
+    const endIndex = startIndex + relativeIndex + "as const;".length;
+
+    const updateContent =
+      fileContent.substring(0, startIndex) +
+      `${targetDeclaration} ${formattedArray}` +
+      fileContent.substring(endIndex);
+
+    await fs.writeFile(filePath, updateContent, "utf-8");
+    console.log(`[v2] Saved ${items.length} studios to ${filePath}`);
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function main() {
   console.log("Fetching all animation studios...");
   const studios = await fetchAllStudios();
@@ -98,11 +141,13 @@ async function main() {
     .map(({ id, name }) => ({ id, name }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  const outputPath = path.join(process.cwd(), "data", "animation-studios.json");
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await fs.writeFile(outputPath, JSON.stringify(animationStudios, null, 2));
+  // const outputPath = path.join(process.cwd(), "data", "animation-studios.json");
+  // await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  // await fs.writeFile(outputPath, JSON.stringify(animationStudios, null, 2));
+  //
+  // console.log(`Saved ${animationStudios.length} studios to ${outputPath}`);
 
-  console.log(`Saved ${animationStudios.length} studios to ${outputPath}`);
+  await updateVariable(animationStudios);
 }
 
 main().catch(console.error);
