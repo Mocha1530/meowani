@@ -84,7 +84,7 @@ async function fetchAllStudios(): Promise<Studio[]> {
   return studios;
 }
 
-async function updateVariable(items: any[]) {
+async function updateVariable(items: Array<{ id: number; name: string }>) {
   const filePath = path.join(
     process.cwd(),
     "src",

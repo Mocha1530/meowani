@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 import { withSerwist } from "@serwist/turbopack";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["192.168.100.156", "192.168.100.158"],
+  allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS
+    ? process.env.ALLOWED_DEV_ORIGINS.split(",")
+    : [],
   cacheComponents: true,
   images: {
     // unoptimized: true,
