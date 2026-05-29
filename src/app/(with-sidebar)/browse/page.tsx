@@ -58,7 +58,7 @@ export default async function BrowsePage({
           <Suspense fallback={<CatalogResultSkeleton />}>
             <CatalogResult />
           </Suspense>
-          <Footer />
+          <Footer className="mt-auto" />
         </CatalogFiltersProvider>
       </div>
     </HydrationBoundary>

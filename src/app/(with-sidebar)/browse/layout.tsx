@@ -48,7 +48,7 @@ export default function BrowseLayout({
           <div className="min-w-0 flex flex-1 shrink flex-col bg-background overflow-x-hidden gap-5 overflow-y-scroll max-h-dvh md:pt-16">
             <CatalogSearchSkeleton />
             <CatalogResultSkeleton />
-            <Footer />
+            <Footer className="mt-auto" />
           </div>
         }
       >

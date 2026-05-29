@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </main>
 
-      <Footer />
+      <Footer className="mt-auto" />
     </div>
   );
 }

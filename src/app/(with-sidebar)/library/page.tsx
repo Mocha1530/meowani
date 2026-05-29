@@ -79,7 +79,7 @@ export default function LibraryPage() {
         <UpcomingComponent />
       </React.Suspense>
       <EndOfContent className="my-8" />
-      <Footer />
+      <Footer className="mt-auto" />
       {/*<AnimeCardsEmpty label="TEST" />*/}
     </div>
   );
