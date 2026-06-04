@@ -96,6 +96,13 @@ export function Footer({ className }: React.ComponentPropsWithoutRef<"div">) {
               >
                 Site Map
               </Path>
+              <Path
+                href="https://status.meowani.site/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Status Page
+              </Path>
             </div>
           </div>
         </div>
