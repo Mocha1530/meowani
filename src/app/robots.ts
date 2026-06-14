@@ -16,6 +16,8 @@ export default function robots(): MetadataRoute.Robots {
       allow: [
         "/$",
         "/assets/*",
+        "/favicon.ico",
+        "/sitemap.xml",
         "/~/image",
         "/_next/static/*",
         "/library",
