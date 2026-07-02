@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Geist, Geist_Mono, Montserrat, Sora } from "next/font/google";
 import "./globals.css";
@@ -109,6 +110,7 @@ export default function RootLayout({
           </NuqsAdapter>
         </SerwistProvider>
         <Analytics />
+        <SpeedInsights />
         <Toaster />
       </body>
       <GoogleAnalytics gaId="G-LNNQQ01K4K" />
