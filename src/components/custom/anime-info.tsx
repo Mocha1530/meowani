@@ -388,12 +388,12 @@ export function AnimeInfoBannerV2({
               </DialogTrigger>
               <DialogContent
                 showCloseButton={false}
-                className="p-0 border-0 border-none bg-transparent shadow-none size-auto"
+                className="p-0 border-0 border-none bg-transparent shadow-none h-auto w-max"
               >
                 <DialogClose asChild>
                   <Button
                     variant="ghost"
-                    className="flex rounded-xl h-auto ps-0 pe-0 px-0 max-w-[90vw] max-h-[90vh]"
+                    className="flex rounded-xl h-auto w-fit ps-0 pe-0 px-0 max-w-[90vw] max-h-[90vh]"
                   >
                     <Image
                       src={
@@ -404,7 +404,7 @@ export function AnimeInfoBannerV2({
                       placeholder="blur"
                       blurDataURL={getShimmerDataURL(data.color || "#8bdfea")}
                       alt={data.title?.eng || "cover"}
-                      className="size-full rounded-xl object-contain"
+                      className="size-auto max-h-[85vh] max-w-full rounded-xl object-contain"
                       width={800}
                       height={1000}
                       fetchPriority="high"
